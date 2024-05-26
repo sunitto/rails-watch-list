@@ -1,9 +1,22 @@
-<h2><%= @list.name %></h2>
+<div class="position-relative">
+  <div class="card-category card-large">
+    <h1><%= @list.name %></h1>
+  </div>
+</div>
+
 <%= link_to "back to lists", lists_path, class: "btn btn-primary" %>
 <%= link_to "add a bookmark", new_list_bookmark_path(@list), class: "btn btn-primary" %>
-<%= link_to "delete your list", lists_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" }, class: "btn btn-primary" %>
-<div class= "d-flex">
-<% @list.bookmarks.each do |bookmark|%>
-<%= bookmark.movie.title%></div>
-<%= bookmark.comment %>
-<% end %>
+<%= link_to "delete your list", list_path(@list), class: "btn btn-outline-secondary", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" } %>
+
+<div class="container">
+  <div class="d-flex justify-content-between">
+    <% @list.bookmarks.each do |bookmark|%>
+      <div class="card" style="width: 20rem;">
+        <img src="<%= bookmark.movie.poster_url %>" class="card-img-top" alt="<%= bookmark.movie.title %>">
+          <%= bookmark.movie.title%>
+        </div>
+      <%= bookmark.comment %>
+    </div>
+  <%= link_to "delete your bookmark", bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this bookmark?" } %>
+  <% end %>
+</div>
